@@ -1,5 +1,12 @@
-data
+
+# jupyter notebooks
 .ipynb_checkpoints
 
-
+# python
 *.pyc
+
+# data
+data
+
+# models
+models
