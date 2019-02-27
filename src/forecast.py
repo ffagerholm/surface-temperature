@@ -1,10 +1,18 @@
+"""
+Create a forecast using the the model found by gridsearch.
+Specify the path to th model, data, and the start and end of the forecast period.
+Example:
+    python src/forecast.py "data/NASA_GISS_LOTI_long_format.csv" "global" "models/global_deviations_sarima.pkl" \
+                           "2019-01-01" "2020-02-01" "models/global_deviations_forecast.csv"
+"""
+import sys
 import pickle
 import pandas as pd
 import statsmodels.api as sm
 
 
 def train_model(data_path, key, model_path):
-    print("Reading model")
+    print("Reading model parameters.")
     with open(model_path, 'rb') as infile:
         model_fit = pickle.load(infile)
     print("Done.")
@@ -44,12 +52,22 @@ def create_forecast(model_fit, start, end, output_path, alpha=0.05):
 
 
 def main():
-    model_fit = train_model(data_path='../data/NASA_GISS_LOTI_long_format.csv', 
-                            key='global', 
-                            model_path='../models/global_deviations_sarima.pkl')
-    create_forecast(model_fit, 
-                    start='2019-02-01', end='2020-02-01', 
-                    output_path='../models/global_deviations_forecast.csv', )
+    if len(sys.argv) == 7:
+        data_path = sys.argv[1]
+        key = sys.argv[2]
+        model_path = sys.argv[3]
+        start = sys.argv[4]
+        end = sys.argv[5]
+        output_path = sys.argv[6]
+
+        model_fit = train_model(data_path=data_path, 
+                                key=key, 
+                                model_path=model_path)
+        create_forecast(model_fit, 
+                        start=start, end=end, 
+                        output_path=output_path, )
+    else:
+        raise RuntimeError('Not enough commandline arguments.')
 
 
 if __name__ == "__main__":
