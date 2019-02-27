@@ -1,0 +1,15 @@
+
+
+.h1 {
+    font-family: Open Sans, verdana, arial, sans-serif;
+}
+
+#description {
+    font-family: Open Sans, verdana, arial, sans-serif;
+    font-size: 12px; 
+    fill: rgb(68, 68, 68); 
+    fill-opacity: 1;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+}

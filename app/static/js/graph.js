@@ -5,8 +5,7 @@ var global_temp = {
     y: graphs['global_data']['y'],
     mode: 'lines',
     line: {
-        shape: 'spline',
-        smoothing: 0,
+        color: 'rgb(0, 0, 128)',
     },
     name: graphs['global_data']['name'],
 };
@@ -15,8 +14,7 @@ var northern_temp = {
     y: graphs['northern_data']['y'],
     mode: 'lines',
     line: {
-        shape: 'spline',
-        smoothing: 0,
+        color: 'rgb(230, 138, 0)',
     },
     name: graphs['northern_data']['name'],
 };
@@ -93,14 +91,23 @@ var nh_forecast_ci_upper = {
     }
 };
 
-var data = [global_temp, northern_temp, 
-            nh_forecast, nh_forecast_ci_lower, nh_forecast_ci_upper,
-            gl_forecast, gl_forecast_ci_lower, gl_forecast_ci_upper,];
+var data = [nh_forecast, nh_forecast_ci_lower, nh_forecast_ci_upper,
+            gl_forecast, gl_forecast_ci_lower, gl_forecast_ci_upper,
+            global_temp, northern_temp,];
 var layout = {
     title: 'Monthly deviations from 1951-1980 mean temperatures',
+    font: {size: 18},
+    showlegend: true,
+    legend: {
+        "orientation": "h"
+    },
     height: 600,
-    xaxis: {range: ['2015-01-01', '2020-02-01']},
-    yaxis: {range: [-0.25, 2]},
+    xaxis: {
+        range: ['2015-01-01', '2020-02-01']
+    },
+    yaxis: {
+        range: [-0.25, 2]
+    },
 };
 
 Plotly.newPlot('graph-div', data, layout, {responsive: true});

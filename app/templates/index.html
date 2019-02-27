@@ -2,9 +2,36 @@
 <html>
 
 <head> 
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
+    <div id='description'>
+    <h1>Comparison of the rise in temperature globally versus in the northern hemisphere</h1>
+    <p>
+        The plot shows the monthly observations of temperature anomalies (in &#176C), that is, deviations from the 
+        mean temperature per month from the reference period 1951-1980. The limits of the x-axis are set as 2015 to 2020
+        by default, but the plot contains data from 1880 to the present. You may use the plot controls in the 
+        upper right corner to alter the view of the data, e.g. press autoscale see all of the data and reset 
+        axes to go back to the default view.
+    </p>
+    <p>
+        The data has been obtained from the <a href="https://data.giss.nasa.gov/gistemp/">NASA GISTEMP v3 pages</a> 
+        (data sets: Land-Ocean Temperature Index <em>Global-mean monthly, seasonal, and annual means</em> and 
+        <em>Northern Hemisphere-mean monthly, seasonal, and annual means</em>).
+    </p>
+    <p>
+        The plot also contains a one year forecast that has been generated using a SARIMA model trained on the 
+        historical data (1880-01-01 to 2019-02-01). The forecasted mean values are shown together with their 
+        95%-confidence intervals (shaded areas). A SARIMA model was chosen due to the nature of the data, 
+        being a time-series with seasonal variation which the model can take into account. 
+    </p>
+    <p>
+        The models that fit each time-series best were chosen through gridsearch. Different configurations 
+        of the hyperparameters were evaluated through cross-validation, and the models with the lowest 
+        mean squared error were chosen. 
+    </p>
+    </div>
     <div id='graph-div'></div>
 </body>
 
