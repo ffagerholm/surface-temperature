@@ -1,6 +1,6 @@
 
-# environment variables
-var.env
+# local environment variables
+.env
 
 # jupyter notebooks
 .ipynb_checkpoints

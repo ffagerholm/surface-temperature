@@ -1,20 +1,19 @@
-from flask import Flask, render_template
-
 import json
 import plotly
-
 import pandas as pd
-import numpy as np
+from flask import Flask, render_template
+from dotenv import find_dotenv, load_dotenv
+
+load_dotenv(find_dotenv())
 
 app = Flask(__name__)
-app.debug = False
 
-monthly_deviations = pd.read_csv('data/NASA_GISS_LOTI_long_format.csv', 
+monthly_deviations = pd.read_csv("s3://tempdev-data/data/NASA_GISS_LOTI_long_format.csv",
                                  index_col='Date', 
                                  parse_dates=['Date'])
-global_forecast = pd.read_csv('models/global_deviations_forecast.csv', 
+global_forecast = pd.read_csv("s3://tempdev-data/models/global_deviations_forecast.csv", 
                               index_col=0)
-northern_forecast = pd.read_csv('models/northern_deviations_forecast.csv', 
+northern_forecast = pd.read_csv("s3://tempdev-data/models/northern_deviations_forecast.csv", 
                                 index_col=0)
 
 
@@ -49,8 +48,7 @@ def index():
     )
 
     # Convert the figures to JSON
-    # PlotlyJSONEncoder appropriately converts pandas, datetime, etc
-    # objects to their JSON equivalents
+    # PlotlyJSONEncoder converts objects to their JSON equivalents
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template('index.html',
