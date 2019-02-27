@@ -35,7 +35,7 @@ def fetch_data(global_temp_url, northern_temp_url, data_path):
     }
     print("Done.")
 
-    print("Transformin data to long format")
+    print("Transforming data to long format")
     # tranform the data sets to a suitable form for modeling
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
               'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
