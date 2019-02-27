@@ -1,4 +1,7 @@
 
+# environment variables
+var.env
+
 # jupyter notebooks
 .ipynb_checkpoints
 

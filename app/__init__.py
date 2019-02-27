@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
-app.debug = True
+app.debug = False
 
 monthly_deviations = pd.read_csv('data/NASA_GISS_LOTI_long_format.csv', 
                                  index_col='Date', 
@@ -58,4 +58,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9999)
+    app.run(host='0.0.0.0', port=8000)
