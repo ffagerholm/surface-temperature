@@ -43,7 +43,7 @@ class SARIMAXWrapper(BaseEstimator, RegressorMixin):
                                    enforce_invertibility=self.enforce_invertibility,
                                    freq=self.freq)
         try:
-            self.results_ = self.model_.fit()
+            self.results_ = self.model_.fit(disp=0)
         except ValueError as error:
             print(self.order, error)
     
