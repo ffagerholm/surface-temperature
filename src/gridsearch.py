@@ -1,5 +1,5 @@
 """
-Run gridsearch with corss-validation over different model configurations.
+Run gridsearch with corss-validation over different configurations for a SARIMA model.
 The best model is saved to a file.
 
 To run 
@@ -62,10 +62,11 @@ def create_model_order_configs(p_lim=(0, 1), i_lim=(0, 1), q_lim=(0, 1)):
 
 
 def run_gridsearch(data_path, key, model_output_path):
+    print("Reading training data from file:", data_path)
     monthly_deviations = pd.read_csv(data_path, 
                                      index_col='Date', 
                                      parse_dates=['Date'])
-
+    print("Done.")
     # take deviations from mean up to (and including) 2018-01
     train_data = monthly_deviations[key][:'2018-01']
 
@@ -95,7 +96,7 @@ def run_gridsearch(data_path, key, model_output_path):
     # that fit the training data best.
     model_fit = grid.best_estimator_.results_
 
-    print("Saving best model")
+    print("Saving best model to file:", model_output_path)
     with open(model_output_path, 'wb') as outfile:
         pickle.dump(model_fit, outfile)
     print("Done.")

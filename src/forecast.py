@@ -12,16 +12,18 @@ import statsmodels.api as sm
 
 
 def train_model(data_path, key, model_path):
-    print("Reading model parameters.")
+    print("Reading model parameters from file:", model_path)
     with open(model_path, 'rb') as infile:
         model_fit = pickle.load(infile)
     print("Done.")
 
+    print("Reading training data from file:", data_path)
     monthly_deviations = pd.read_csv(data_path, 
                                      index_col='Date', 
                                      parse_dates=['Date'])
+    print("Done.")
 
-    # take deviations from mean up 
+    # take time-series from the column `key`
     data = monthly_deviations[key]
 
     print("Initialize and fit model.")
@@ -36,7 +38,7 @@ def train_model(data_path, key, model_path):
 
 
 def create_forecast(model_fit, start, end, output_path, alpha=0.05):
-    print("Generate predictions and save to file.")
+    print("Generatng predictions and saving to file:", output_path)
     pred_res = model_fit.get_prediction(start=start, end=end, 
                                         full_results=True, alpha=alpha)
     # mean value
