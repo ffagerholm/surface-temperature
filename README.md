@@ -31,16 +31,27 @@ jupyter notebook notebooks/
 ```
 
 The scripts for fetching the data, model selection and forecasting can be run locally. They are found in the directory `scr/`. 
+They should be run as a pipeline in the order
+1. fetch_data.py
+2. gridsearch.py
+3. forecast.py  
 
-The web application is deployed on [Heroku](https://www.heroku.com) and fetches 
-data stored on [Amazon S3](https://aws.amazon.com/s3/). 
+This can be done by running the command 
+```
+make create-forecast
+```
+All the steps of the pipeline will be run in the correct order.
+
+The web application is deployed on [Heroku](https://www.heroku.com) and fetches data stored on [Amazon S3](https://aws.amazon.com/s3/). 
+
+The data are updated around the middle of every month (source)[https://data.giss.nasa.gov/gistemp/]. Thus, the data used by the web app should also be updated with the same frequency. This can be done by scheduling the pipeline to run every month (using for example `cron`), which would update the data and forecasts.    
 
 ## Project structure
 
     ├── README.md          <- The top-level README for this project.
     ├── LICENCE
     ├── Procfile           <- For Heroku deployment.
-    ├── Makefile           <- 
+    ├── Makefile           <- Makefile for running the data pipeline
     ├── app                <- Code for web application.
     │   ├── static
     |   |     ├── css      <- Styling.
@@ -70,7 +81,6 @@ data stored on [Amazon S3](https://aws.amazon.com/s3/).
 ## Built With
 
 * [Pandas](https://pandas.pydata.org/) - Data cleaning and manipulation
-* [Matplotlib](https://matplotlib.org/) - Plotting
 * [Scikit-learn](https://scikit-learn.org/) - Cross-validation and model selection
 * [StatsModels](http://www.statsmodels.org/dev/index.html) - Time-series models
 * [Plotly](https://plot.ly/) - Plotting and web frontend
