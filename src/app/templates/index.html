@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+
+<head> 
+</head>
+
+<body>
+    <div id='graph-div'></div>
+</body>
+
+<footer>   
+    <!-- D3.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-1.44.4.min.js"></script>
+    <!-- Data for graphs -->
+    <script type="text/javascript">var graphs = {{ graphJSON | safe }};</script>
+    <!-- Code for creating graphs -->
+    <script type="text/javascript" src="{{url_for('static', filename='js/graph.js') }}"></script>
+</footer>
+
+</html>
