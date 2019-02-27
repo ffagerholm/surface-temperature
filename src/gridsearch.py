@@ -1,5 +1,19 @@
-from warnings import catch_warnings
-from warnings import filterwarnings
+"""
+Run gridsearch with corss-validation over different model configurations.
+The best model is saved to a file.
+
+To run 
+    python src/gridsearch.py <data path> <column name> <model output path>
+
+where 
+    <data path>: Path to training data.
+    <column name>: Column name for time series (either "global" or "northern").
+    <model output path> Path to file where the best model should be saved.
+
+Example:
+    python src/gridsearch.py  'data/NASA_GISS_LOTI_long_format.csv' 'global' 'models/global_deviations_sarima.pkl'
+"""
+import sys
 from itertools import product 
 import pickle
 import pandas as pd
@@ -47,7 +61,7 @@ def create_model_order_configs(p_lim=(0, 1), i_lim=(0, 1), q_lim=(0, 1)):
     return model_orders
 
 
-def main(data_path, key, model_output_path):
+def run_gridsearch(data_path, key, model_output_path):
     monthly_deviations = pd.read_csv(data_path, 
                                      index_col='Date', 
                                      parse_dates=['Date'])
@@ -55,7 +69,7 @@ def main(data_path, key, model_output_path):
     # take deviations from mean up to (and including) 2018-01
     train_data = monthly_deviations[key][:'2018-01']
 
-    model_orders = create_model_order_configs((1, 7), (1, 1), (1, 1))
+    model_orders = create_model_order_configs((1, 11), (1, 1), (1, 1))
         
     param_grid = {
         'order': model_orders,
@@ -87,9 +101,18 @@ def main(data_path, key, model_output_path):
     print("Done.")
 
 
+def main():
+    if len(sys.argv) == 4:
+        data_path = sys.argv[1]
+        key = sys.argv[2]
+        model_output_path = sys.argv[3]
+
+        run_gridsearch(data_path, key, model_output_path)
+    else:
+        raise RuntimeError('Not enough commandline arguments.')    
+    
+
 if __name__ == "__main__":
-    main('../data/NASA_GISS_LOTI_long_format.csv', 
-         'global', 
-         '../models/global_deviations_sarima.pkl')
+    main()
 
     
