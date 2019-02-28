@@ -15,3 +15,8 @@ models/northern_deviations_sarima.pkl: data/NASA_GISS_LOTI_long_format.csv model
 create-forecast: data/NASA_GISS_LOTI_long_format.csv models/global_deviations_sarima.pkl models/northern_deviations_sarima.pkl
 	python src/forecast.py "data/NASA_GISS_LOTI_long_format.csv" "global" "models/global_deviations_sarima.pkl" "2019-01-01" "2020-02-01" "models/global_deviations_forecast.csv" 
 	python src/forecast.py "data/NASA_GISS_LOTI_long_format.csv" "northern" "models/northern_deviations_sarima.pkl" "2019-01-01" "2020-02-01" "models/northern_deviations_forecast.csv"
+
+upload-data: data/NASA_GISS_LOTI_long_format.csv models/global_deviations_forecast.csv models/northern_deviations_forecast.csv
+	python src/upload_data.py "data/NASA_GISS_LOTI_long_format.csv" "tempdev-data" "data"
+	python src/upload_data.py "models/global_deviations_forecast.csv" "tempdev-data" "models" 
+	python src/upload_data.py "models/northern_deviations_forecast.csv" "tempdev-data" "models"

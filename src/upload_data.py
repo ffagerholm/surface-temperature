@@ -1,7 +1,7 @@
 """
 Script for uploading data to AWS S3.
 Usage:
-    python .\src\upload_data.py <file path> <bucket name> <bucket directory> 
+    python src/upload_data.py <file path> <bucket name> <bucket directory> 
 
 Where:
 <file path>: Path to the local file.
@@ -9,7 +9,7 @@ Where:
 <bucket directory>:  Name of the directory in the bucket.
 
 Example:
-    python .\src\upload_data.py ".\data\NASA_GISS_LOTI_long_format.csv" "tempdev-data" "data" 
+    python src/upload_data.py "data/NASA_GISS_LOTI_long_format.csv" "tempdev-data" "data" 
 """
 import sys
 import os
