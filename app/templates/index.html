@@ -26,13 +26,24 @@
         95%-confidence intervals (shaded areas). A SARIMA model was chosen due to the nature of the data, 
         being a time-series with seasonal variation which the model can take into account. 
     </p>
+    </div>
+    <!-- Graph of data and forecast -->
+    <div id='graph-div'></div>
+
+    <div id='description'>
     <p>
         The models that fit each time-series best were chosen through gridsearch. Different configurations 
         of the hyperparameters were evaluated through cross-validation, and the models with the lowest 
         mean squared error were chosen. 
     </p>
+    <p>
+        Even though the models were chosen in this manner, there are no guarantees that the forecasted values 
+        will be realized in the future. The confidence intervals shows the ranges in which the future values will 
+        most like be. The confidence intervals in this case are quite wide, suggesting uncertanty in the forecast.
+        To improve the forecast we could try to include more data, and features other than the historical temperature
+        data. We could also try using other models.
+    </p>
     </div>
-    <div id='graph-div'></div>
 </body>
 
 <footer>   
