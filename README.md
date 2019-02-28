@@ -17,7 +17,7 @@ This repository contains the code for the web app, as well as code for fetching 
 
 Before running the code the following prerequisites should be installed.  
 All code is written in `Python 3.6.8`.  
-To install the requred packages, run   
+To install the requred packages, run  
 ```
 pip install -r requirements.txt
 ```
@@ -35,16 +35,23 @@ They should be run as a pipeline in the order
 1. fetch_data.py
 2. gridsearch.py
 3. forecast.py  
+4. upload_data.py
 
-This can be done by running the command 
+This can be done by running the command  
 ```
 make create-forecast
 ```
+
+And to upload, run  
+```
+make upload-data
+```
+
 All the steps of the pipeline will be run in the correct order.
 
 The web application is deployed on [Heroku](https://www.heroku.com) and fetches data stored on [Amazon S3](https://aws.amazon.com/s3/). 
 
-The data are updated around the middle of every month (source)[https://data.giss.nasa.gov/gistemp/]. Thus, the data used by the web app should also be updated with the same frequency. This can be done by scheduling the pipeline to run every month (using for example `cron`), which would update the data and forecasts.    
+The data are updated around the middle of every month (source)[https://data.giss.nasa.gov/gistemp/]. Thus, the data used by the web app should also be updated with the same frequency. This can be done by scheduling the pipeline to run every month (using for example `cron`), which would update the data and forecasts.  
 
 ## Project structure
 
