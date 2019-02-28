@@ -55,8 +55,13 @@ def fetch_data(global_temp_url, northern_temp_url, data_path):
         data_sets[key].sort_index(inplace=True)
     print("Done.")
 
+    
     # combine data frames
     monthly_deviations = pd.concat([data_sets[key][key] for key in data_sets], axis=1)
+
+    # drop the data after 2019-01-01, missing values
+    monthly_deviations = monthly_deviations[:'2019-01-01']
+
     print("Saving data to file:", data_path)
     # save data to file
     monthly_deviations.to_csv(data_path)
