@@ -33,13 +33,13 @@ def run_gridsearch(data_path, key, param_grid_path, model_output_path):
                                      index_col='Date', 
                                      parse_dates=['Date'])
     print("Done.")
-    # take deviations from mean up to (and including) 2018-01
-    train_data = monthly_deviations[key][:'2019-01-01']
+    # take deviations from mean temperatures
+    train_data = monthly_deviations[key]
     
     with open(param_grid_path, 'rb') as infile:
         param_grid = json.loads(infile.read())
 
-    cv = TimeSeriesSplit(n_splits=2)
+    cv = TimeSeriesSplit(n_splits=3)
     model = SARIMAXWrapper()
 
     print("Running grid search")
