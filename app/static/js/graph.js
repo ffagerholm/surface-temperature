@@ -105,7 +105,7 @@ if (window.mobilecheck()) {
     fontsize = 22;
     height = 700;
 } else {
-    fontsize = 18;
+    fontsize = 16;
     height = 600;
 }
 
