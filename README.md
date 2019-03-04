@@ -35,14 +35,13 @@ They should be run as a pipeline in the order
 1. fetch_data.py
 2. gridsearch.py
 3. forecast.py  
-4. upload_data.py
 
 This can be done by running the command  
 ```
-make create-forecast
+make models/global_deviations_forecast.csv
+make models/northern_deviations_forecast.csv
 ```
 All the steps of the pipeline will be run in the correct order.  
-
 
 And to upload the files to Amazon S3, run  
 ```

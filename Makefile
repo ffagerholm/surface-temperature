@@ -32,11 +32,11 @@ $(global_temp_model): $(data_path) $(global_temp_params)
 $(northern_temp_model): $(data_path) $(northern_temp_params)
 	python src/gridsearch.py $(data_path) "northern" $(northern_temp_params) $(northern_temp_model)
 
-$(global_temp_forecast): $(data_path) $(global_temp_model)
-	python src/forecast.py $(data_path) "global" $(global_temp_model) $(forecast_start) $(forecast_end) $(global_temp_forecast)
+$(global_temp_forecast): $(global_temp_model)
+	python src/forecast.py $(global_temp_model) $(forecast_start) $(forecast_end) $(global_temp_forecast)
 
 $(northern_temp_forecast): $(data_path) $(northern_temp_model)
-	python src/forecast.py $(data_path) "northern" $(northern_temp_model) $(forecast_start) $(forecast_end) $(northern_temp_forecast)
+	python src/forecast.py $(northern_temp_model) $(forecast_start) $(forecast_end) $(northern_temp_forecast)
 
 upload-data: $(data_path) $(global_temp_forecast) $(northern_temp_forecast)
 	python src/upload_data.py $(data_path) $(bucket_name) "data"

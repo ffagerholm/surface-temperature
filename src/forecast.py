@@ -11,33 +11,12 @@ import pandas as pd
 import statsmodels.api as sm
 
 
-def train_model(data_path, key, model_path):
-    print("Reading model parameters from file:", model_path)
+def create_forecast(model_path, start, end, output_path, alpha=0.05):
+    print("Reading model from file:", model_path)
     with open(model_path, 'rb') as infile:
         model_fit = pickle.load(infile)
     print("Done.")
 
-    print("Reading training data from file:", data_path)
-    monthly_deviations = pd.read_csv(data_path, 
-                                     index_col='Date', 
-                                     parse_dates=['Date'])
-    print("Done.")
-
-    # take time-series from the column `key`
-    data = monthly_deviations[key]
-
-    print("Initialize and fit model.")
-    model = sm.tsa.SARIMAX(data,
-                           order=model_fit.model.order, 
-                           seasonal_order=model_fit.model.seasonal_order,
-                           freq='MS')
-    model_fit = model.fit(disp=0)
-    print("Done.")
-
-    return model_fit
-
-
-def create_forecast(model_fit, start, end, output_path, alpha=0.05):
     print("Generatng predictions and saving to file:", output_path)
     pred_res = model_fit.get_prediction(start=start, end=end, 
                                         full_results=True, alpha=alpha)
@@ -54,22 +33,18 @@ def create_forecast(model_fit, start, end, output_path, alpha=0.05):
 
 
 def main():
-    if len(sys.argv) == 7:
-        data_path = sys.argv[1]
-        key = sys.argv[2]
-        model_path = sys.argv[3]
-        start = sys.argv[4]
-        end = sys.argv[5]
-        output_path = sys.argv[6]
+    # check the the user provided enough cmd line arguments
+    if len(sys.argv) == 5:
+        model_path = sys.argv[1]
+        start = sys.argv[2]
+        end = sys.argv[3]
+        output_path = sys.argv[4]
 
-        model_fit = train_model(data_path=data_path, 
-                                key=key, 
-                                model_path=model_path)
-        create_forecast(model_fit, 
+        create_forecast(model_path, 
                         start=start, end=end, 
-                        output_path=output_path, )
+                        output_path=output_path)
     else:
-        raise RuntimeError('Not enough commandline arguments.')
+        raise RuntimeError('Not enough command line arguments.')
 
 
 if __name__ == "__main__":

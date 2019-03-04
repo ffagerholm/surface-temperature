@@ -16,6 +16,7 @@ import os
 import boto3
 from dotenv import find_dotenv, load_dotenv
 
+# set environment variables: authentication keys.
 load_dotenv(find_dotenv())
 
 
@@ -32,6 +33,7 @@ def upload_data(file_path, bucket_name, directory):
 
     print("Done.")
 
+
 def main():
     if len(sys.argv) == 4:
         file_path = sys.argv[1]
@@ -40,7 +42,7 @@ def main():
 
         upload_data(file_path, bucket_name, directory)
     else:
-        raise RuntimeError('Not enough commandline arguments.')    
+        raise RuntimeError('Not enough command line arguments.')    
     
 if __name__ == "__main__":
     main()
