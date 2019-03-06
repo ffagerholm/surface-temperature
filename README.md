@@ -35,23 +35,29 @@ They should be run as a pipeline in the order
 1. fetch_data.py
 2. gridsearch.py
 3. forecast.py  
-4. upload_data.py
 
 This can be done by running the command  
 ```
-make create-forecast
+make models/global_deviations_forecast.csv
+make models/northern_deviations_forecast.csv
 ```
+All the steps of the pipeline will be run in the correct order.  
 
-And to upload, run  
+And to upload the files to Amazon S3, run  
 ```
 make upload-data
 ```
+> Note that for uploading (and fetching) data the access and secret keys should be stored in a file named `.env` in the root directory.  
 
-All the steps of the pipeline will be run in the correct order.
+Example of the `.env` file:
+```
+AWS_ACCESS_KEY_ID=<access key>
+AWS_SECRET_ACCESS_KEY=<secret key>
+```
 
-The web application is deployed on [Heroku](https://www.heroku.com) and fetches data stored on [Amazon S3](https://aws.amazon.com/s3/). 
+The web application is deployed on [Heroku](https://www.heroku.com) and fetches data stored on [Amazon S3](https://aws.amazon.com/s3/).  
 
-The data are updated around the middle of every month (source)[https://data.giss.nasa.gov/gistemp/]. Thus, the data used by the web app should also be updated with the same frequency. This can be done by scheduling the pipeline to run every month (using for example `cron`), which would update the data and forecasts.  
+The data are updated on NASAs website around the middle of every month [source](https://data.giss.nasa.gov/gistemp/). Thus, the data used by the web app should also be updated with the same frequency. This can be done by scheduling the pipeline to run every month (using for example `cron`), which would update the data and forecasts.  
 
 ## Project structure
 

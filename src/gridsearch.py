@@ -33,13 +33,20 @@ def run_gridsearch(data_path, key, param_grid_path, model_output_path):
                                      index_col='Date', 
                                      parse_dates=['Date'])
     print("Done.")
-    # take deviations from mean temperatures
+    # take time-series from column `key`
     train_data = monthly_deviations[key]
     
+    # read and parse parameter configurations for the 
+    # grid search, provied in json format
     with open(param_grid_path, 'rb') as infile:
         param_grid = json.loads(infile.read())
 
+    # run time-series cross-validation: all observations remain 
+    # in the same order and test set consists of "more recent" data 
+    # than the training set
     cv = TimeSeriesSplit(n_splits=3)
+    # instantiate a wrapped SARIMAX model (actually SARIMA model, since 
+    # we don't include any exogenous variables)
     model = SARIMAXWrapper()
 
     print("Running grid search")
@@ -48,16 +55,18 @@ def run_gridsearch(data_path, key, param_grid_path, model_output_path):
                         scoring='neg_mean_squared_error', 
                         cv=cv, 
                         n_jobs=1,
-                        verbose=2)
+                        verbose=2,
+                        refit=True)
     # run grid search
     grid.fit(train_data, train_data)       
     print("Done.")     
 
     print("Best model found through grid search:", grid.best_estimator_)
     # get the SARIMAXResultsWrapper from the model 
-    # that fit the training data best.
+    # that fit the training data best, fitted to the whole data set. 
     model_fit = grid.best_estimator_.results_
 
+    # pickle the model and dump to file
     print("Saving best model to file:", model_output_path)
     with open(model_output_path, 'wb') as outfile:
         pickle.dump(model_fit, outfile)
@@ -73,7 +82,7 @@ def main():
 
         run_gridsearch(data_path, key, param_grid_path, model_output_path)
     else:
-        raise RuntimeError('Not enough commandline arguments.')    
+        raise RuntimeError('Not enough command line arguments.')    
     
 
 if __name__ == "__main__":

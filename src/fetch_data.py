@@ -18,7 +18,7 @@ Example:
 import sys
 import pandas as pd
 
-# urls for fetching the csv
+# urls for fetching the csv files
 GLOBAL_MEANS_URL = "https://data.giss.nasa.gov/gistemp/tabledata_v3/GLB.Ts+dSST.csv"
 NORTHERN_MEANS_URL = "https://data.giss.nasa.gov/gistemp/tabledata_v3/NH.Ts+dSST.csv"
 
@@ -68,11 +68,12 @@ def fetch_data(global_temp_url, northern_temp_url, data_path):
     print("Done.")
 
 def main():
+    # check the the user provided enough cmd line arguments
     if len(sys.argv) == 2:
         data_path = sys.argv[1]
         fetch_data(GLOBAL_MEANS_URL, NORTHERN_MEANS_URL, data_path)
     else:
-        raise RuntimeError('Not enough commandline arguments.')    
+        raise RuntimeError('Not enough command line arguments.')    
     
     
 
